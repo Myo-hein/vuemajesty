@@ -1,0 +1,54 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>People of Vue</h1>
+        <ul class="list-group">
+            <li v-for="(candidate, index) in candidates" :key="index" class="list-group-item">
+                {{candidate.name}} {{candidate.votes}}
+                <!-- increase votes 'on:click'-->
+                <button class="btn btn-success" @click="candidate.votes++">Vote</button>
+            </li>
+        </ul>
+        <!-- listening for keyboard event -->
+        <input @keyup.delete="clear" class="form-control" placeholder="press 'delete' to reset">
+        <h2>Our mayor is {{mayor.name}}!</h2>
+        <pre>{{ $data }}</pre>
+        <pre>{{ mayor }}</pre>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '.container',
+            data: {
+                candidates: [
+                    {name: "Mr. Black", votes: 140},
+                    {name: "Mr. White", votes: 135},
+                    {name: "Mr. Pink", votes: 145},
+                    {name: "Mr. Brown", votes: 130},
+                ]
+            },
+            computed: {
+                mayor: function () {
+                    //first we sort the array descending
+                    var candidatesSorted = this.candidates.sort(function (a, b) {
+                        return b.votes - a.votes;
+                    });
+                    //the mayor will be the first item
+                    return candidatesSorted[0];
+                }
+            },
+            methods: {
+                clear: function () {
+                    //Turn votes of all candidate to 0 using map() function.
+                    this.candidates = this.candidates.map(function (candidate) {
+                        candidate.votes = 0;
+                        return candidate;
+                    })
+                }
+            }
+        })
+    </script>
+</html>
