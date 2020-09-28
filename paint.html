@@ -1,0 +1,26 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Color Paint</title>
+</head>
+<body>
+    <div id="app" >
+        
+        <h1 :style="paintColor">Paint Me Pretty</h1>
+        <input type="color" v-model="paintColor.color"/>
+        
+        
+    </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: {
+             paintColor: {
+                color: "#00CCAA"
+            }
+        }   
+    });
+</script>
+</html>
