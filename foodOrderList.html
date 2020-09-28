@@ -1,0 +1,95 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <title>Planet Travels</title>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Food Order List</h1>
+        <p style="font-size: 140px;">
+            {{ orders.count }}
+        </p>
+        <button class="btn btn-danger" @click="stop">Stop Orders</button>
+        <button class="btn btn-danger" @click="reset">Reset Orders</button>
+        <hr>
+        <div class="row">
+            <food name="Cheeseburger"></food>
+            <food name="Double Bacon Burger"></food>
+            <food name="Whooper"></food>
+        </div>
+        <hr>
+        <h1>Ordered List</h1>
+        <small v-if="this.orders.list < 1">No Order yet</small>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="order in orders.list"> {{ order }} </li>
+        </ul>
+    </div>
+</body> 
+<template id="food">
+    <div class="text-center col-lg-4">
+        <p style="font-size: 40px;">
+            {{ orders }}
+        </p>
+        <button class="btn btn-default" @click="order">{{ name }}</button>
+    </div>
+</template>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+    var bus = new Vue()
+    Vue.component('food', {
+        template: '#food',
+        props: ['name'],
+        data: function () {
+            return {
+                orders: 0
+            }
+        },
+        methods: {
+            order: function (event) {
+                // instead of using this.name
+                // we can access event's element's text
+                var food = event.srcElement.textContent;
+                this.orders++
+                bus.$emit('orderd', food)
+            },
+            reset: function () {
+                this.orders = 0
+            }
+        },
+        created () {
+            bus.$on('reset', this.reset)
+        }
+    })
+    new Vue({
+        el: '.container',
+        data: {
+            orders: {
+                count: 0,
+                list: []
+            }
+        },
+        methods:
+        {
+            countorder: function (food) {
+                this.orders.count++
+                this.orders.list.push(food + ' received an order.')
+            },
+            reset: function () {
+                this.orders = {
+                    count: 0,
+                    list: []
+                }
+                bus.$emit('reset')
+            },
+            stop: function () {
+                bus.$off(['orderd'])
+            }
+        },
+        created () {
+            bus.$on('orderd', this.countorder)
+        }
+    })
+</script>
+</html>
