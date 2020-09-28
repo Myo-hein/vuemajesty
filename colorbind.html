@@ -1,0 +1,55 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Color Binding</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="box" v-bind:class="{ 'red' : color, 'blue' : !color }"></div>
+            <div class="box" v-bind:class="{ 'purple' : color, 'green' : !color }"></div>
+            <div class="box" v-bind:class="{ 'red' : color, 'blue' : !color }"></div>
+            <div class="box" v-bind:class="{ 'purple' : color, 'green' : !color }"></div>
+        </div>
+        
+        <button v-on:click="flipColor" class="btn btn-block btn-success">
+            Flip color!
+        </button>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '.container',
+        data: {
+            color: true
+        },
+        methods: {
+            flipColor: function() {
+                this.color = !this.color;
+            }
+        }
+    });
+</script>
+<style type="text/css">
+    .red {
+        background: #ff0000;
+    }
+    .blue {
+        background: #0000ff;
+    }
+    .purple {
+        background: #7B1FA2;
+    }
+    .green {
+        background: #4CAF50;
+    }
+    .box {
+        float: left;
+        width: 200px;
+        height: 200px;
+        margin: 40px;
+        border: 1px solid rgba(0, 0, 0, .2);
+    }
+</style>
+</html>

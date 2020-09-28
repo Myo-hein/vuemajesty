@@ -19,11 +19,13 @@
             <food name="Whooper"></food>
         </div>
         <hr>
-        <h1>Ordered List</h1>
-        <small v-if="this.orders.list < 1">No Order yet</small>
-        <ul class="list-group">
-            <li class="list-group-item" v-for="order in orders.list"> {{ order }} </li>
-        </ul>
+        <div style="text-align:left">
+            <h1>Ordered List</h1>
+            <small v-if="this.orders.list < 1">No Order yet</small>
+            <ol class="list-group">
+                <li class="list-group-item" v-for="order in orders.list"> {{ order }} </li>
+            </ol>
+        </div>
     </div>
 </body> 
 <template id="food">
@@ -31,7 +33,7 @@
         <p style="font-size: 40px;">
             {{ orders }}
         </p>
-        <button class="btn btn-default" @click="order">{{ name }}</button>
+        <button class="btn btn-primary" @click="order">{{ name }}</button>
     </div>
 </template>
 
@@ -84,7 +86,7 @@
                 bus.$emit('reset')
             },
             stop: function () {
-                bus.$off(['orderd'])
+                bus.$off()
             }
         },
         created () {
